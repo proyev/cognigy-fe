@@ -9,21 +9,45 @@ interface Msg {
   msg: string
 };
 
+
+// move away
+const defaultMsg = {
+  display: 'flex',
+  margin: '5px 0',
+  width: '100%',
+};
+
+const userMsg = {
+  flexFlow: 'row-reverse'
+}
+
+const defaultMsgBubble = {
+  borderTopLeftRadius: '10px',
+  borderTopRightRadius: '10px',
+  maxWidth: '60%',
+  padding: '0 4%',
+};
+
+const userMsgBubble = {
+  backgroundColor: 'lightgrey',
+  borderBottomLeftRadius: '10px',
+};
+
+const botMsgBubble = {
+  backgroundColor: 'primary.dark',
+  borderBottomRightRadius: '10px',
+};
+
 function Message ({msg: {sender, msg}}: {msg: Msg}) {
   return (
     <Box
-      sx={{
-        backgroundColor: 'red',
-        display: 'flex',
-        margin: '5px 0',
-        width: '100%',
-      }}
+      sx={[defaultMsg, sender === 'user' && userMsg]}
     >
       <Avatar 
         alt={sender}
         sx={{
           alignSelf: 'flex-end',
-          bgcolor: 'primary.light',
+          bgcolor: 'dimgrey',
           margin: '.5% 1.5%',
           height: 24,
           width: 24,
@@ -32,14 +56,7 @@ function Message ({msg: {sender, msg}}: {msg: Msg}) {
         {sender === 'user' ? <PersonIcon /> : <SmartToyIcon />}
       </Avatar>
       <Box
-        sx={{
-          backgroundColor: 'green',
-          borderTopLeftRadius: '10px',
-          borderTopRightRadius: '10px',
-          borderBottomRightRadius: '10px',
-          maxWidth: '70%',
-          padding: '0 4%',
-        }}
+        sx={[defaultMsgBubble, sender === 'user' ? userMsgBubble : botMsgBubble]}
       >
         <p>{msg}</p>
       </Box>
@@ -47,6 +64,5 @@ function Message ({msg: {sender, msg}}: {msg: Msg}) {
   );
 }
 
-// apply two different stylings
 
 export default Message;
